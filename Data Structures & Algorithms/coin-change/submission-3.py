@@ -1,0 +1,20 @@
+class Solution:
+    def coinChange(self, coins: List[int], amount: int) -> int:
+        memo = {}
+        def dfs(total):
+            if total == amount:
+                return 0
+            
+            if total in memo:
+                return memo[total]
+
+            res = 1e9
+            for coin in coins:
+                if total + coin <= amount:
+                    res = min(res, 1+dfs(total+coin))
+            
+            memo[total] = res
+            return memo[total]
+        ans = dfs(0)
+        return -1 if ans>= 1e9 else ans
+        
